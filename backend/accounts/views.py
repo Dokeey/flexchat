@@ -3,34 +3,50 @@ from django.utils.crypto import get_random_string
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
+from rest_framework_jwt.settings import api_settings
 
 from .serializers import UserSerializer
 
 User = get_user_model()
 
 
-def get_username():
-    while True:
-        username = get_random_string(length=32)
-        if not User.objects.filter(username=username).exists():
-            return username
-
-
 class UserViewSet(CreateModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    기본 유저 생성 및 업데이트 뷰셋
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
+    def get_username(self):
+        """
+        유저 생성시 랜덤 username 문자열 생성
+        """
+        while True:
+            username = get_random_string(length=32)
+            if not User.objects.filter(username=username).exists():
+                return username
+
     def perform_create(self, serializer):
+        """
+        유저 생성시 username 지정 및 client_ip 값 파싱후 추가
+        """
         x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ipaddress = x_forwarded_for.split(',')[-1].strip()
         else:
             ipaddress = self.request.META.get('REMOTE_ADDR')
 
-        serializer.save(username=get_username(), client_ip=ipaddress)
-        return super().perform_create(serializer)
+        username = self.get_username()
+        user = serializer.save(username=username, client_ip=ipaddress)
+        user.set_password(username)
+        user.save()
 
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+
+        payload = jwt_payload_handler(user)
+        token = jwt_encode_handler(payload)
+        serializer.save(token=token)
+
+        return super().perform_create(serializer)
