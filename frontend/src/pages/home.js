@@ -2,47 +2,38 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { Radio } from "antd";
 import { useAppContext, setToken } from "store";
-import "App.css";
 
-function App() {
+function Home() {
   const { dispatch } = useAppContext();
   const [userInfo, setUserInfo] = useState({});
   const userSubmit = async () => {
     try {
-      const response = await Axios.post("http://localhost/accounts/users/", {
-        ...userInfo,
-      });
-      console.log(response.data);
-      setUserInfo(response.data);
-      dispatch(setToken(userInfo.token, userInfo.pk));
+      if (userInfo.pk) {
+        const response = await Axios.put(
+          `http://localhost/accounts/users/${userInfo.pk}/`,
+          { ...userInfo }
+        );
+        setUserInfo(response.data);
+      } else {
+        const response = await Axios.post("http://localhost/accounts/users/", {
+          ...userInfo,
+        });
+        setUserInfo(response.data);
+        dispatch(setToken(response.data.token, response.data.pk));
+      }
     } catch (error) {
       console.error(error);
     }
   };
 
-  const userSelectInfo = (e) => {
-    if (e.target.name === "gender") {
-      setUserInfo((prev) => ({
-        ...prev,
-        gender: e.target.value,
-      }));
-    } else {
-      setUserInfo((prev) => ({
-        ...prev,
-        want_match: e.target.value,
-      }));
-    }
-  };
-
   return (
     <div>
-      hello donghoo
       <Radio.Group
-        onChange={userSelectInfo}
-        defaultValue="M"
+        onChange={(e) =>
+          setUserInfo((prev) => ({ ...prev, gender: e.target.value }))
+        }
         buttonStyle="solid"
         size="large"
-        name="gender"
       >
         <Radio.Button style={{ borderRadius: "12px" }} value="M">
           남자
@@ -51,23 +42,20 @@ function App() {
       </Radio.Group>
       <hr />
       <Radio.Group
-        onChange={userSelectInfo}
-        defaultValue="A"
+        onChange={(e) =>
+          setUserInfo((prev) => ({ ...prev, want_match: e.target.value }))
+        }
         buttonStyle="solid"
         style={{ marginTop: 16, borderRadius: "12px" }}
         size="large"
-        name="want_match"
       >
         <Radio.Button value="M">남자</Radio.Button>
         <Radio.Button value="F">여자</Radio.Button>
         <Radio.Button value="A">아무나</Radio.Button>
       </Radio.Group>
       <button onClick={userSubmit}>token가져오기</button>
-      성별 : {userInfo.gender}
-      매칭 : {userInfo.want_match}
-      토큰 : {userInfo.token}
     </div>
   );
 }
 
-export default App;
+export default Home;
