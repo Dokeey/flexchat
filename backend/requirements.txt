@@ -11,3 +11,4 @@ channels
 django-debug-toolbar
 djangorestframework
 djangorestframework-jwt
+django-cors-headers

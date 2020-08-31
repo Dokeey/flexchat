@@ -42,11 +42,13 @@ INSTALLED_APPS = [
 
     # 3rd part
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -142,3 +144,8 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': timedelta(minutes=20),
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(hours=24),
 }
+
+CORS_ALLOWED_ORIGINS = [
+    ""
+]
+CORS_ALLOW_ALL_ORIGINS = True

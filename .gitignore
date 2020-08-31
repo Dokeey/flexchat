@@ -1,5 +1,6 @@
 .idea
 flexlib
-dev_run.sh
+front_run.sh
+back_run.sh
 __pycache__
 db.sqlite3
