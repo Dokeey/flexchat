@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework import permissions
-from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
+from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin
+from rest_framework.response import Response
 from rest_framework_jwt.settings import api_settings
 
 from .serializers import UserSerializer
@@ -10,7 +11,7 @@ from .serializers import UserSerializer
 User = get_user_model()
 
 
-class UserViewSet(CreateModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
+class UserViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, viewsets.GenericViewSet):
     """
     기본 유저 생성 및 업데이트 뷰셋
     """
@@ -42,6 +43,7 @@ class UserViewSet(CreateModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
         user.set_password(username)
         user.save()
 
+        # 유저 생성과 동시에 JWT 토큰 발급
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
         jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
@@ -50,3 +52,12 @@ class UserViewSet(CreateModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
         serializer.save(token=token)
 
         return super().perform_create(serializer)
+
+    def destroy(self, request, *args, **kwargs):
+        """
+        pk가 -1이라면 아직 회원이 아니라는 뜻
+        """
+        pk = self.kwargs.get('pk')
+        if pk == '-1':
+            return Response(status.HTTP_204_NO_CONTENT)
+        return super().destroy(self, request, *args, **kwargs)

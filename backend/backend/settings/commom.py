@@ -145,7 +145,7 @@ JWT_AUTH = {
     'JWT_REFRESH_EXPIRATION_DELTA': timedelta(hours=24),
 }
 
-CORS_ALLOWED_ORIGINS = [
-    ""
-]
+# CORS_ALLOWED_ORIGINS = [
+#     ""
+# ]
 CORS_ALLOW_ALL_ORIGINS = True

@@ -10,4 +10,4 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['gender', 'want_match', 'token']
+        fields = ['pk', 'gender', 'want_match', 'token']
