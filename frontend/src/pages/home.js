@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Axios from "axios";
 import { Radio } from "antd";
 import { useAppContext, setToken } from "store";
+import { Chat } from "components/chat";
 
 function Home() {
   const { dispatch } = useAppContext();
@@ -54,6 +55,7 @@ function Home() {
         <Radio.Button value="A">아무나</Radio.Button>
       </Radio.Group>
       <button onClick={userSubmit}>token가져오기</button>
+      <Chat />
     </div>
   );
 }
