@@ -9,8 +9,11 @@
     "antd": "^4.6.2",
     "axios": "^0.20.0",
     "react": "^16.13.1",
+    "react-beforeunload": "^2.2.3",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.3",
+    "use-reducer-with-side-effects": "^2.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
