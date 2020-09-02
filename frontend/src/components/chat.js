@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useAppContext } from "store";
+import { Input, Button } from "antd";
+import TextArea from "antd/lib/input/TextArea";
 
 export function Chat() {
   const {
-    store: { token },
+    store: { jwtToken },
   } = useAppContext();
-  console.log(token);
   const [chatSocket, setChatSocket] = useState({});
 
   useEffect(() => {
-    setChatSocket(
-      new WebSocket("ws://" + "localhost" + "/ws/chat/" + `?token=${token}`)
-    );
-  }, [token]);
+    if (jwtToken) {
+      setChatSocket(
+        new WebSocket(
+          "ws://" + "localhost" + "/ws/chat/" + `?token=${jwtToken}`
+        )
+      );
+    }
+  }, [jwtToken]);
 
   chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
@@ -48,9 +53,9 @@ export function Chat() {
 
   return (
     <div>
-      <textarea id="chat-log" cols="100" rows="20"></textarea>
+      <TextArea id="chat-log" cols="100" rows="20"></TextArea>
       <br />
-      <input
+      <Input
         id="chat-message-input"
         type="text"
         size="100"
@@ -58,14 +63,15 @@ export function Chat() {
           textInput = button;
         }}
         onKeyUp={chat_enter}
+        disabled={jwtToken.length === 0}
       />
-      <br />
-      <input
+      <Button
+        disabled={jwtToken.length === 0}
         id="chat-message-submit"
-        type="button"
-        value="Send"
         onClick={chat_submit}
-      />
+      >
+        SEND
+      </Button>
     </div>
   );
 }
