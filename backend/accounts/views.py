@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from rest_framework_jwt.settings import api_settings
 
 from .serializers import UserSerializer
+from chat.models import Channel
 
 User = get_user_model()
 
@@ -50,6 +51,9 @@ class UserViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, viewset
         payload = jwt_payload_handler(user)
         token = jwt_encode_handler(payload)
         serializer.save(token=token)
+
+        # channel instance 생성
+        Channel.objects.create(user=user)
 
         return super().perform_create(serializer)
 

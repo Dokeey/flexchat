@@ -82,6 +82,10 @@ class ChatMatchView(GenericAPIView):
     queryset = User.objects.all()
     serializer_class = ChatMatchSerializer
 
+    def get_object(self):
+        obj = super().get_object()
+        return obj.channel
+
     def get(self, request, *args, **kwargs):
         pk = self.kwargs.get('pk')
         user = User.objects.get(pk=pk)
@@ -96,7 +100,7 @@ class ChatMatchView(GenericAPIView):
         another = get_another(user, gender, want_match)
         if not another:
             group_name = ''
-            serializer.save(group_name=group_name)
+            serializer.save(group=group_name)
             return Response(serializer.data)
 
         while not User.objects.filter(pk=another.pk).exists():
@@ -104,13 +108,13 @@ class ChatMatchView(GenericAPIView):
             if not another:
                 get_another(user, gender, want_match)
                 group_name = ''
-                serializer.save(group_name=group_name)
+                serializer.save(group=group_name)
                 return Response(serializer.data)
 
         group_name = f'{another.pk}_{user.pk}'
-        another.group_name = group_name
-        another.save()
-        serializer.save(group_name=group_name)
+        another.channel.group = group_name
+        another.channel.save()
+        serializer.save(group=group_name)
 
         return Response(serializer.data)
 
@@ -118,3 +122,7 @@ class ChatMatchView(GenericAPIView):
 class GetGroupNameView(RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = ChatMatchSerializer
+
+    def get_object(self):
+        obj = super().get_object()
+        return obj.channel

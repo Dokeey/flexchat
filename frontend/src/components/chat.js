@@ -2,20 +2,23 @@ import React, { useEffect, useState } from "react";
 import { useAppContext } from "store";
 import { Input, Button } from "antd";
 import TextArea from "antd/lib/input/TextArea";
+import { ChatStop } from "./chatStop";
+import { deleteGroup } from "store";
 
 export function Chat() {
   const {
     store: { jwtToken, group },
+    dispatch,
   } = useAppContext();
   const [chatSocket, setChatSocket] = useState({});
 
   useEffect(() => {
-    if (jwtToken && group.length > 0) {
-      setChatSocket(
-        new WebSocket(
-          "ws://" + "localhost" + "/ws/chat/" + `?token=${jwtToken}`
-        )
+    console.log("이펙");
+    if (jwtToken && group) {
+      const ws = new WebSocket(
+        "ws://" + "localhost" + "/ws/chat/" + `?token=${jwtToken}`
       );
+      setChatSocket(ws);
     }
   }, [jwtToken, group]);
 
@@ -25,7 +28,16 @@ export function Chat() {
   };
 
   chatSocket.onclose = function (e) {
-    console.error("Chat socket closed unexpectedly");
+    dispatch(deleteGroup());
+    console.error(e, "클로즈 됐습니다.");
+  };
+
+  chatSocket.onerror = (e) => {
+    console.error(e, "에러 뜸");
+  };
+
+  const chatclose = () => {
+    chatSocket.close();
   };
 
   let textInput = null;
@@ -50,7 +62,6 @@ export function Chat() {
     );
     messageInputDom.value = "";
   };
-
   return (
     <div>
       <TextArea id="chat-log" cols="100" rows="20"></TextArea>
@@ -63,16 +74,16 @@ export function Chat() {
           textInput = button;
         }}
         onKeyUp={chat_enter}
-        disabled={jwtToken.length === 0}
+        disabled={group.length === 0}
       />
       <Button
-        disabled={jwtToken.length === 0}
+        disabled={group.length === 0}
         id="chat-message-submit"
         onClick={chat_submit}
       >
         SEND
-        {group}
       </Button>
+      <ChatStop chatClose={chatclose} />
     </div>
   );
 }

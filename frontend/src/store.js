@@ -24,6 +24,9 @@ const reducer = (prevState, action) => {
     const { payload: group } = action;
     const newState = { ...prevState, group };
     return Update(newState);
+  } else if (type === DELETE_GROUP) {
+    const newState = { ...prevState, group: "" };
+    return Update(newState);
   }
 
   return prevState;
@@ -49,6 +52,7 @@ export const useAppContext = () => useContext(AppContext);
 const SET_TOKEN = "APP/SET_TOKEN";
 const DELETE_TOKEN = "APP/DELETE_TOKEN";
 const SET_GROUP = "APP/SET_GROUP";
+const DELETE_GROUP = "APP/DELETE_GROUP";
 
 // Action Creators
 export const setToken = (token, pk) => ({
@@ -62,3 +66,5 @@ export const setGroup = (group) => ({
   type: SET_GROUP,
   payload: group,
 });
+
+export const deleteGroup = () => ({ type: DELETE_GROUP });

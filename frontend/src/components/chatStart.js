@@ -24,9 +24,9 @@ export function ChatStart() {
                 headers,
               }
             );
-            console.log(response.data.group_name);
-            setGroup_name(response.data.group_name);
-            dispatch(setGroup(response.data.group_name));
+            console.log(response.data.group);
+            setGroup_name(response.data.group);
+            dispatch(setGroup(response.data.group));
           } catch (error) {
             console.error(error);
           }
@@ -43,8 +43,8 @@ export function ChatStart() {
       const response = await Axios.get(`http://localhost/chat/match/${pk}/`, {
         headers,
       });
-      setGroup_name(response.data.group_name);
-      dispatch(setGroup(response.data.group_name));
+      setGroup_name(response.data.group);
+      dispatch(setGroup(response.data.group));
       console.log(response.data);
     } catch (error) {
       console.error(error);
