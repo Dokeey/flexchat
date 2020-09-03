@@ -5,19 +5,19 @@ import TextArea from "antd/lib/input/TextArea";
 
 export function Chat() {
   const {
-    store: { jwtToken },
+    store: { jwtToken, group },
   } = useAppContext();
   const [chatSocket, setChatSocket] = useState({});
 
   useEffect(() => {
-    if (jwtToken) {
+    if (jwtToken && group.length > 0) {
       setChatSocket(
         new WebSocket(
           "ws://" + "localhost" + "/ws/chat/" + `?token=${jwtToken}`
         )
       );
     }
-  }, [jwtToken]);
+  }, [jwtToken, group]);
 
   chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
@@ -71,6 +71,7 @@ export function Chat() {
         onClick={chat_submit}
       >
         SEND
+        {group}
       </Button>
     </div>
   );

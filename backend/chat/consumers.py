@@ -13,7 +13,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         if not self.scope['user'].is_authenticated:
             await self.close()
 
-        self.room_group_name = 'ch'
+        self.room_group_name = 'ch' + self.scope['user'].group_name
 
         # Join room group
         await self.channel_layer.group_add(
