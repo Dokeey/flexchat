@@ -15,5 +15,6 @@ class User(AbstractUser):
     password = models.CharField('password', max_length=128, blank=True)
     gender = models.CharField(max_length=1, choices=GenderChoices.choices)
     want_match = models.CharField(max_length=1, choices=MatchChoices.choices)
+    group_name = models.CharField(max_length=50, blank=True)
     client_ip = models.GenericIPAddressField(null=True)
     created_at = models.DateTimeField(verbose_name="생성일", auto_now_add=True)

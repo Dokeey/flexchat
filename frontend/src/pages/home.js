@@ -3,16 +3,22 @@ import Axios from "axios";
 import { Radio } from "antd";
 import { useAppContext, setToken } from "store";
 import { Chat } from "components/chat";
+import { ChatStart } from "components/chatStart";
 
 function Home() {
-  const { dispatch } = useAppContext();
+  const {
+    store: { jwtToken },
+    dispatch,
+  } = useAppContext();
   const [userInfo, setUserInfo] = useState({});
   const userSubmit = async () => {
     try {
       if (userInfo.pk) {
+        const headers = { Authorization: `JWT ${jwtToken}` };
         const response = await Axios.put(
           `http://localhost/accounts/users/${userInfo.pk}/`,
-          { ...userInfo }
+          { ...userInfo },
+          { headers }
         );
         setUserInfo(response.data);
       } else {
@@ -54,7 +60,8 @@ function Home() {
         <Radio.Button value="F">여자</Radio.Button>
         <Radio.Button value="A">아무나</Radio.Button>
       </Radio.Group>
-      <button onClick={userSubmit}>token가져오기</button>
+      <button onClick={userSubmit}>내 정보 설정</button>
+      <ChatStart />
       <Chat />
     </div>
   );

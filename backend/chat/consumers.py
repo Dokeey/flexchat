@@ -9,17 +9,8 @@ User = get_user_model()
 
 class ChatConsumer(AsyncWebsocketConsumer):
 
-    @database_sync_to_async
-    def get_user(self, username):
-        return User.objects.get(username=username)
-
     async def connect(self):
-        try:
-            user = await self.get_user(self.scope['username'])
-        except:
-            user = AnonymousUser()
-
-        if not user.is_authenticated:
+        if not self.scope['user'].is_authenticated:
             await self.close()
 
         self.room_group_name = 'ch'
