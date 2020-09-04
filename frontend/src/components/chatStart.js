@@ -4,46 +4,41 @@ import { useAppContext } from "store";
 import Axios from "axios";
 import { setGroup } from "store";
 
-export function ChatStart() {
+export function ChatStart({ chatClose }) {
   const {
-    store: { pk, jwtToken },
+    store: { pk, jwtToken, group },
     dispatch,
   } = useAppContext();
-  const [group_name, setGroup_name] = useState("");
   const headers = { Authorization: `JWT ${jwtToken}` };
 
   useEffect(() => {
-    if (jwtToken) {
-      if (group_name.length === 0) {
-        const get_group = setInterval(async () => {
-          console.log("while");
-          try {
-            const response = await Axios.get(
-              `http://localhost/chat/group/${pk}/`,
-              {
-                headers,
-              }
-            );
-            console.log(response.data.group);
-            setGroup_name(response.data.group);
-            dispatch(setGroup(response.data.group));
-          } catch (error) {
-            console.error(error);
-          }
-        }, 1000);
-        return () => {
-          clearInterval(get_group);
-        };
-      }
+    if (jwtToken && !group) {
+      const get_group = setInterval(async () => {
+        console.log("while");
+        try {
+          const response = await Axios.get(
+            `http://localhost/chat/group/${pk}/`,
+            {
+              headers,
+            }
+          );
+          console.log(response.data);
+          dispatch(setGroup(response.data.group));
+        } catch (error) {
+          console.error(error);
+        }
+      }, 1000);
+      return () => {
+        clearInterval(get_group);
+      };
     }
   });
-
   const startMatching = async () => {
+    chatClose();
     try {
       const response = await Axios.get(`http://localhost/chat/match/${pk}/`, {
         headers,
       });
-      setGroup_name(response.data.group);
       dispatch(setGroup(response.data.group));
       console.log(response.data);
     } catch (error) {

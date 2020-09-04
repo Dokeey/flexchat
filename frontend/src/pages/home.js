@@ -3,7 +3,6 @@ import Axios from "axios";
 import { Radio } from "antd";
 import { useAppContext, setToken } from "store";
 import { Chat } from "components/chat";
-import { ChatStart } from "components/chatStart";
 
 function Home() {
   const {
@@ -61,7 +60,6 @@ function Home() {
         <Radio.Button value="A">아무나</Radio.Button>
       </Radio.Group>
       <button onClick={userSubmit}>내 정보 설정</button>
-      <ChatStart />
       <Chat />
     </div>
   );

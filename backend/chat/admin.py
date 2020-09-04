@@ -5,4 +5,4 @@ from .models import Channel
 
 @admin.register(Channel)
 class ChannelAdmin(admin.ModelAdmin):
-    list_display = ['user', 'name', 'group']
+    list_display = ['user', 'group', 'is_matching']

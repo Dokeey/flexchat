@@ -2,7 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 import Home from "./home";
 import { Beforeunload } from "react-beforeunload";
-import { useAppContext, deleteToken } from "store";
+import { useAppContext, deleteToken, deleteGroup } from "store";
 import Axios from "axios";
 
 function Root() {
@@ -13,6 +13,7 @@ function Root() {
 
   const userDelete = async (pk) => {
     dispatch(deleteToken());
+    dispatch(deleteGroup());
     try {
       await Axios.delete(`http://localhost/accounts/users/${pk}/`);
     } catch (error) {

@@ -4,6 +4,7 @@ import { Input, Button } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { ChatStop } from "./chatStop";
 import { deleteGroup } from "store";
+import { ChatStart } from "./chatStart";
 
 export function Chat() {
   const {
@@ -34,10 +35,16 @@ export function Chat() {
 
   chatSocket.onerror = (e) => {
     console.error(e, "에러 뜸");
+    // chatclose();
   };
 
   const chatclose = () => {
-    chatSocket.close();
+    if (chatSocket.close) {
+      chatSocket.close();
+      setChatSocket({});
+    } else {
+      return null;
+    }
   };
 
   let textInput = null;
@@ -83,6 +90,7 @@ export function Chat() {
       >
         SEND
       </Button>
+      <ChatStart chatClose={chatclose} />
       <ChatStop chatClose={chatclose} />
     </div>
   );
