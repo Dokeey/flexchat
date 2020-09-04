@@ -14,11 +14,8 @@ export function Chat() {
   const [chatSocket, setChatSocket] = useState({});
 
   useEffect(() => {
-    console.log("이펙");
     if (jwtToken && group) {
-      const ws = new WebSocket(
-        "ws://" + "localhost" + "/ws/chat/" + `?token=${jwtToken}`
-      );
+      const ws = new WebSocket(`ws://localhost/ws/chat/?token=${jwtToken}`);
       setChatSocket(ws);
     }
   }, [jwtToken, group]);

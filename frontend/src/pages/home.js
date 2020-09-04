@@ -3,6 +3,7 @@ import Axios from "axios";
 import { Radio } from "antd";
 import { useAppContext, setToken } from "store";
 import { Chat } from "components/chat";
+import { UserCount } from "components/userCount";
 
 function Home() {
   const {
@@ -34,6 +35,7 @@ function Home() {
 
   return (
     <div>
+      <UserCount />
       <Radio.Group
         onChange={(e) =>
           setUserInfo((prev) => ({ ...prev, gender: e.target.value }))

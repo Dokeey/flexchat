@@ -27,6 +27,10 @@ const reducer = (prevState, action) => {
   } else if (type === DELETE_GROUP) {
     const newState = { ...prevState, group: "" };
     return Update(newState);
+  } else if (type === SET_TOTALUSER) {
+    const { payload: total_user } = action;
+    const newState = { ...prevState, total_user };
+    return Update(newState);
   }
 
   return prevState;
@@ -38,6 +42,7 @@ export const AppProvider = ({ children }) => {
     jwtToken,
     pk: -1,
     group: "",
+    total_user: "로딩중",
   });
   return (
     <AppContext.Provider value={{ store, dispatch }}>
@@ -53,6 +58,7 @@ const SET_TOKEN = "APP/SET_TOKEN";
 const DELETE_TOKEN = "APP/DELETE_TOKEN";
 const SET_GROUP = "APP/SET_GROUP";
 const DELETE_GROUP = "APP/DELETE_GROUP";
+const SET_TOTALUSER = "APP/SET_TOTALUSER";
 
 // Action Creators
 export const setToken = (token, pk) => ({
@@ -68,3 +74,8 @@ export const setGroup = (group) => ({
 });
 
 export const deleteGroup = () => ({ type: DELETE_GROUP });
+
+export const setTotalUser = (total_user) => ({
+  type: SET_TOTALUSER,
+  payload: total_user,
+});
