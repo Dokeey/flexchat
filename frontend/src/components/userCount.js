@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Axios from "axios";
 import { useInterval } from "utils/useInterval";
 import { useAppContext } from "store";

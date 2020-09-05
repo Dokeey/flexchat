@@ -1,0 +1,66 @@
+.app {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: reqeat(3, 1fr);
+  grid-auto-rows: 100px 1fr 150px;
+  grid-template-areas:
+    "header header header"
+    "left-sidebar contents right-sidebar"
+    "footer footer footer";
+  //   background-color: lightyellow;
+  //   border: 3px solid #333;
+  width: 1280px;
+  max-width: 100%;
+  margin: 10px auto;
+  //   background-color: red;
+
+  .header {
+    display: grid;
+    grid-area: header;
+    justify-content: space-around;
+    // background-color: yellow;
+    grid-template-columns: 120px 1fr 120px;
+    grid-template-areas: ". logo topnav";
+
+    .logo {
+      display: flex;
+      grid-area: logo;
+      justify-self: center;
+      align-items: center;
+      margin: 10px 0px 10px 0px;
+      font-size: 50px;
+      //   background-color: rgb(126, 189, 89);
+    }
+    .topnav {
+      display: flex;
+      justify-self: center;
+      align-items: center;
+      grid-area: topnav;
+    }
+    .total-user {
+      display: flex;
+      justify-self: center;
+      align-items: center;
+      grid-area: total-user;
+      margin-left: 10px;
+    }
+  }
+  .left-sidebar {
+    grid-area: left-sidebar;
+    background-color: brown;
+  }
+  .right-sidebar {
+    grid-area: right-sidebar;
+    background-color: brown;
+  }
+  .contents {
+    grid-area: contents;
+    background-color: blue;
+  }
+
+  .footer {
+    grid-area: footer;
+    justify-self: center;
+    background-color: yellow;
+  }
+}
