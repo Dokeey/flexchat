@@ -21,5 +21,5 @@ export function UserCount() {
 
   useInterval(get_user_count, 5000);
 
-  return <div>UesrCount : {total_user}</div>;
+  return <div>현재 {total_user}명이 FlexChat을 이용 중 입니다</div>;
 }

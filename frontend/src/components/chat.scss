@@ -1,0 +1,95 @@
+.chat-content {
+  border: 3px solid yellow;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .chat-log-window {
+    display: flex;
+    flex-direction: column;
+    // justify-content: flex-end;
+    align-items: flex-end;
+    border: 3px solid red;
+    background-image: url("../assets/chatback.png");
+    height: 100%;
+    max-height: 60vh;
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    .bubble {
+      position: relative;
+      max-width: 60%;
+      padding: 10px;
+      margin: 10px 20px 5px 20px;
+      background: #ffffff;
+      -webkit-border-radius: 15px;
+      -moz-border-radius: 15px;
+      border-radius: 15px;
+      word-break: break-all;
+    }
+    .bubble:after {
+      left: 100%;
+      top: 66%;
+      border: solid transparent;
+      content: " ";
+      height: 0;
+      width: 0;
+      position: absolute;
+      pointer-events: none;
+      border-left-color: #ffffff;
+      //   border-width: 10px;
+      border-width: 8px 10px 5px;
+      margin-top: -13px;
+    }
+
+    .another {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+
+      .another-user {
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        .another-bubble {
+          position: relative;
+          max-width: 55%;
+          padding: 10px;
+          margin: 10px 20px 5px 20px;
+          background: #ffffff;
+          -webkit-border-radius: 15px;
+          -moz-border-radius: 15px;
+          border-radius: 15px;
+          word-break: break-all;
+        }
+        .another-bubble:after {
+          right: 100%;
+          top: 55%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+          border-right-color: #ffffff;
+          border-width: 8px 10px 5px;
+          margin-top: -13px;
+        }
+      }
+    }
+  }
+  .chat-log-window::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.spin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}

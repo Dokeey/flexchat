@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "antd";
 import { useAppContext } from "store";
 import Axios from "axios";
@@ -6,13 +6,12 @@ import { setGroup } from "store";
 import { useInterval } from "utils/useInterval";
 import { setTotalUser } from "store";
 
-export function ChatStart({ chatClose }) {
+export function ChatStart({ chatClose, setWaiters }) {
   const {
     store: { pk, jwtToken, group },
     dispatch,
   } = useAppContext();
   const headers = { Authorization: `JWT ${jwtToken}` };
-  const [waiters, setWaiters] = useState(0);
 
   const get_waiters_counter = () => {
     console.log("signup function ran");
@@ -60,7 +59,6 @@ export function ChatStart({ chatClose }) {
   return (
     <div>
       <Button onClick={startMatching}>채팅시작하기</Button>
-      {waiters ? <div>내 앞의 대기자 수 : {waiters}</div> : null}
     </div>
   );
 }

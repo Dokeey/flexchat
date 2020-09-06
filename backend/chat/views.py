@@ -124,7 +124,10 @@ class ChatMatchView(GenericAPIView):
     def get_group_hook(self, gender, want_match, request, **kwargs):
         while not self.get_object().group:
             user = self.get_object().user
-            if user.gender != gender or user.want_match != want_match or not User.objects.filter(pk=user.pk).exists():
+            if not User.objects.filter(pk=user.pk).exists():
+                get_queue(gender, want_match).remove(user)
+                return self.group_name_response(request, **kwargs)
+            if user.gender != gender or user.want_match != want_match:
                 get_queue(gender, want_match).remove(user)
                 user.channel.is_matching = False
                 user.channel.save()
