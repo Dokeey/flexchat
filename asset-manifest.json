@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/github.io/flexchat/static/css/main.3bc3c5c9.chunk.css",
+    "main.js": "/github.io/flexchat/static/js/main.79fc90a9.chunk.js",
+    "main.js.map": "/github.io/flexchat/static/js/main.79fc90a9.chunk.js.map",
+    "runtime-main.js": "/github.io/flexchat/static/js/runtime-main.3968d139.js",
+    "runtime-main.js.map": "/github.io/flexchat/static/js/runtime-main.3968d139.js.map",
+    "static/css/2.d4e7eff5.chunk.css": "/github.io/flexchat/static/css/2.d4e7eff5.chunk.css",
+    "static/js/2.755f609e.chunk.js": "/github.io/flexchat/static/js/2.755f609e.chunk.js",
+    "static/js/2.755f609e.chunk.js.map": "/github.io/flexchat/static/js/2.755f609e.chunk.js.map",
+    "index.html": "/github.io/flexchat/index.html",
+    "precache-manifest.64ee63341f942a36d48c778fbce37b9e.js": "/github.io/flexchat/precache-manifest.64ee63341f942a36d48c778fbce37b9e.js",
+    "service-worker.js": "/github.io/flexchat/service-worker.js",
+    "static/css/2.d4e7eff5.chunk.css.map": "/github.io/flexchat/static/css/2.d4e7eff5.chunk.css.map",
+    "static/css/main.3bc3c5c9.chunk.css.map": "/github.io/flexchat/static/css/main.3bc3c5c9.chunk.css.map",
+    "static/js/2.755f609e.chunk.js.LICENSE.txt": "/github.io/flexchat/static/js/2.755f609e.chunk.js.LICENSE.txt",
+    "static/media/chat.scss": "/github.io/flexchat/static/media/chatback.e82d095f.png",
+    "static/media/flexchatlogo.png": "/github.io/flexchat/static/media/flexchatlogo.ad21ba20.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3968d139.js",
+    "static/css/2.d4e7eff5.chunk.css",
+    "static/js/2.755f609e.chunk.js",
+    "static/css/main.3bc3c5c9.chunk.css",
+    "static/js/main.79fc90a9.chunk.js"
+  ]
+}
