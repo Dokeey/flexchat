@@ -8,8 +8,9 @@ import {
   WomanOutlined,
   ManOutlined,
   LoadingOutlined,
+  CloseCircleOutlined,
 } from "@ant-design/icons";
-import { Avatar, Spin } from "antd";
+import { Avatar, Spin, notification } from "antd";
 import "./chat.scss";
 import { useInterval } from "utils/useInterval";
 import { setTotalUser } from "store";
@@ -109,12 +110,12 @@ export function Chat({ chatSocket, setChatSocket }) {
     dispatch(deleteGroup());
     setChatSocket({});
     dispatch(setIsMatch(false));
-    console.error(e, "클로즈 됐습니다.");
-  };
-
-  chatSocket.onerror = (e) => {
-    console.error(e, "에러");
-    // chatclose();
+    // console.error(e, "클로즈 됐습니다.");
+    notification.open({
+      message: "채팅이 종료되었습니다.",
+      description: "새로운 채팅을 시작하세요",
+      icon: <CloseCircleOutlined style={{ color: "red" }} />,
+    });
   };
 
   const chatclose = () => {

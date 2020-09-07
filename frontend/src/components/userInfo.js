@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Radio, Drawer, Button } from "antd";
+import { Radio, Drawer, Button, notification } from "antd";
 import { useAppContext } from "store";
 import Axios from "axios";
 import { setToken } from "store";
@@ -9,6 +9,7 @@ import {
   WomanOutlined,
   TeamOutlined,
   SettingOutlined,
+  CheckCircleOutlined,
 } from "@ant-design/icons";
 import { setIsMatch } from "store";
 import { setIsLogin } from "store";
@@ -46,6 +47,12 @@ export function UserInfo({ signal }) {
         onDrawerClose();
         dispatch(setIsLogin(true));
       }
+
+      notification.open({
+        message: "성공적으로 저장되었습니다.",
+        description: "이제 채팅을 시작할 수 있습니다!",
+        icon: <CheckCircleOutlined style={{ color: "green" }} />,
+      });
     } catch (error) {
       console.error(error);
     }

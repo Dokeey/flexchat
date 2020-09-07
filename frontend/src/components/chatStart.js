@@ -1,9 +1,9 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, notification } from "antd";
 import Axios from "axios";
 import { setGroup, useAppContext } from "store";
 import { setIsLogin } from "store";
-import { CommentOutlined } from "@ant-design/icons";
+import { CommentOutlined, SmileOutlined } from "@ant-design/icons";
 import { setIsMatch } from "store";
 
 export function ChatStart({ chatClose, setWaiters }) {
@@ -27,6 +27,12 @@ export function ChatStart({ chatClose, setWaiters }) {
       });
       dispatch(setGroup(response.data.group));
       setWaiters(0);
+
+      notification.open({
+        message: "상대방과 연결되었습니다.",
+        description: "인사를 건네보세요 :)",
+        icon: <SmileOutlined style={{ color: "#43d5d2" }} />,
+      });
     } catch (error) {
       console.error(error);
     }
