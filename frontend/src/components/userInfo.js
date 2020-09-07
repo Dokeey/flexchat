@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Radio, Drawer, Button } from "antd";
 import { useAppContext } from "store";
 import Axios from "axios";
@@ -10,10 +10,12 @@ import {
   TeamOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import { setIsMatch } from "store";
+import { setIsLogin } from "store";
 
-export function UserInfo() {
+export function UserInfo({ signal }) {
   const {
-    store: { jwtToken },
+    store: { jwtToken, is_login },
     dispatch,
   } = useAppContext();
   const [userInfo, setUserInfo] = useState({ gender: "", want_match: "" });
@@ -24,6 +26,7 @@ export function UserInfo() {
     try {
       setLoading(true);
       if (userInfo.pk) {
+        dispatch(setIsMatch(false));
         const headers = { Authorization: `JWT ${jwtToken}` };
         const response = await Axios.put(
           `http://localhost/accounts/users/${userInfo.pk}/`,
@@ -41,6 +44,7 @@ export function UserInfo() {
         dispatch(setToken(response.data.token, response.data.pk));
         setLoading(false);
         onDrawerClose();
+        dispatch(setIsLogin(true));
       }
     } catch (error) {
       console.error(error);
@@ -54,6 +58,13 @@ export function UserInfo() {
   const onDrawerClose = () => {
     setVisible(false);
   };
+
+  useEffect(() => {
+    if (!is_login) {
+      showDrawer();
+      dispatch(setIsLogin(true));
+    }
+  }, [is_login, dispatch]);
 
   return (
     <div>
@@ -75,7 +86,7 @@ export function UserInfo() {
             backgroundColor: "transparent",
           }}
           //   title="SETTING"
-          placement="right"
+          placement="left"
           closable={true}
           onClose={onDrawerClose}
           visible={visible}

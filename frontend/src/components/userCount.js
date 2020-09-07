@@ -1,8 +1,8 @@
 import React from "react";
 import Axios from "axios";
 import { useInterval } from "utils/useInterval";
-import { useAppContext } from "store";
-import { setTotalUser } from "store";
+import { useAppContext, setTotalUser } from "store";
+import { Card } from "antd";
 
 export function UserCount() {
   const {
@@ -21,5 +21,12 @@ export function UserCount() {
 
   useInterval(get_user_count, 5000);
 
-  return <div>현재 {total_user}명이 FlexChat을 이용 중 입니다</div>;
+  return (
+    <Card
+      title={<div style={{ textAlign: "center" }}>지금 몇명?</div>}
+      bordered={true}
+    >
+      <h1 style={{ textAlign: "center", color: "#43d5d2" }}>{total_user}</h1>
+    </Card>
+  );
 }

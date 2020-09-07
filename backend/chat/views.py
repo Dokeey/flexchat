@@ -45,8 +45,8 @@ def get_another(user, gender, want_match):
                 another = male_want_male.popleft()
             if len(female_want_any):
                 another = female_want_any.popleft()
-            if not male_want_any:
-                another = male_want_any.get()
+            if len(male_want_any):
+                another = male_want_any.popleft()
             if not another:
                 user.channel.is_matching = True
                 male_want_any.append(user)

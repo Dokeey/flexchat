@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useAppContext, deleteGroup } from "store";
-import { ChatStop } from "./chatStop";
 import { ChatStart } from "./chatStart";
 import Search from "antd/lib/input/Search";
 import {
@@ -12,27 +11,54 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Spin } from "antd";
 import "./chat.scss";
+import { useInterval } from "utils/useInterval";
+import { setTotalUser } from "store";
+import Axios from "axios";
+import { setIsMatch } from "store";
 
-export function Chat() {
+export function Chat({ chatSocket, setChatSocket }) {
   const {
-    store: { jwtToken, group, pk },
+    store: { group, pk, jwtToken, is_match },
     dispatch,
   } = useAppContext();
-  const [chatSocket, setChatSocket] = useState({});
   const [message, setMessage] = useState("");
+  const [key, setKey] = useState(1);
+  const [waiters, setWaiters] = useState(0);
   const messagesEndRef = useRef(null);
   const [chatlog, setChatlog] = useState([
     <div key="0" ref={messagesEndRef}></div>,
   ]);
-  const [key, setKey] = useState(1);
-  const [waiters, setWaiters] = useState(0);
 
-  useEffect(() => {
-    if (jwtToken && group) {
-      const ws = new WebSocket(`ws://localhost/ws/chat/?token=${jwtToken}`);
-      setChatSocket(ws);
+  const headers = { Authorization: `JWT ${jwtToken}` };
+
+  const get_waiters_counter = () => {
+    console.log(is_match, group);
+    if (jwtToken) {
+      try {
+        const response = Axios.get("http://localhost/chat/users_count/");
+        const response2 = Axios.get(`http://localhost/chat/group/${pk}/`, {
+          headers,
+        });
+        Axios.all([response, response2])
+          .then(
+            Axios.spread((...responses) => {
+              const response = responses[0];
+              const response2 = responses[1];
+              console.log("response : ", response.data);
+              console.log("response2 : ", response2.data);
+              dispatch(setTotalUser(response.data.count));
+              setWaiters(response2.data.waiters_count);
+            })
+          )
+          .catch((error) => {
+            console.error(error);
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }, [jwtToken, group]);
+  };
+  useInterval(get_waiters_counter, 5000);
 
   chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
@@ -79,7 +105,10 @@ export function Chat() {
   };
 
   chatSocket.onclose = function (e) {
+    setChatlog([<div key="0" ref={messagesEndRef}></div>]);
     dispatch(deleteGroup());
+    setChatSocket({});
+    dispatch(setIsMatch(false));
     console.error(e, "클로즈 됐습니다.");
   };
 
@@ -91,7 +120,6 @@ export function Chat() {
   const chatclose = () => {
     if (chatSocket.close) {
       chatSocket.close();
-      setChatSocket({});
     } else {
       return null;
     }
@@ -139,8 +167,13 @@ export function Chat() {
   return (
     <div className="chat-content">
       <div className="chat-log-window">
-        {jwtToken && !group ? (
-          <div className="spin">
+        {!is_match ? (
+          <div className="flex-center">
+            <ChatStart chatClose={chatclose} setWaiters={setWaiters} />
+            {chatlog}
+          </div>
+        ) : !group ? (
+          <div className="flex-center">
             <Spin
               size="large"
               tip={
@@ -173,8 +206,6 @@ export function Chat() {
           onChange={(e) => setMessage(e.target.value)}
           onSearch={chat_submit}
         />
-        <ChatStart chatClose={chatclose} setWaiters={setWaiters} />
-        <ChatStop chatClose={chatclose} />
       </div>
     </div>
   );
