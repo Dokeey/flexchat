@@ -25,7 +25,7 @@
       background: #ffffff;
       -webkit-border-radius: 15px;
       -moz-border-radius: 15px;
-      border-radius: 15px;
+      border-radius: 10px;
       word-break: break-all;
     }
     .bubble:after {
@@ -62,12 +62,12 @@
           background: #ffffff;
           -webkit-border-radius: 15px;
           -moz-border-radius: 15px;
-          border-radius: 15px;
+          border-radius: 10px;
           word-break: break-all;
         }
         .another-bubble:after {
           right: 100%;
-          top: 55%;
+          top: 60%;
           border: solid transparent;
           content: " ";
           height: 0;
@@ -75,8 +75,8 @@
           position: absolute;
           pointer-events: none;
           border-right-color: #ffffff;
-          border-width: 8px 10px 5px;
-          margin-top: -13px;
+          border-width: 8px 10px 8px;
+          margin-top: -16.5px;
         }
       }
     }

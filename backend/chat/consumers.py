@@ -74,6 +74,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'type': 'chat_message',
                 'message': message,
                 'pk': self.scope['user'].pk,
+                'gender': self.scope['user'].gender,
             }
         )
 
@@ -81,9 +82,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def chat_message(self, event):
         message = event['message']
         pk = event['pk']
+        gender = event['gender']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
             'pk': pk,
+            'gender': gender,
         }))

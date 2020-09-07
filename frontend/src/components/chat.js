@@ -6,7 +6,8 @@ import Search from "antd/lib/input/Search";
 import {
   SendOutlined,
   MessageTwoTone,
-  UserOutlined,
+  WomanOutlined,
+  ManOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
 import { Avatar, Spin } from "antd";
@@ -46,14 +47,31 @@ export function Chat() {
       setChatlog(chatlog);
     } else {
       const ref = chatlog.pop();
-      chatlog.push(
-        <div key={key} className="another">
-          <div className="another-user">
-            <Avatar icon={<UserOutlined />} style={{ marginLeft: "10px" }} />
-            <div className="another-bubble">{data.message}</div>
+      if (data.gender === "M") {
+        chatlog.push(
+          <div key={key} className="another">
+            <div className="another-user">
+              <Avatar
+                icon={<ManOutlined />}
+                style={{ marginLeft: "10px", backgroundColor: "skyblue" }}
+              />
+              <div className="another-bubble">{data.message}</div>
+            </div>
           </div>
-        </div>
-      );
+        );
+      } else {
+        chatlog.push(
+          <div key={key} className="another">
+            <div className="another-user">
+              <Avatar
+                icon={<WomanOutlined />}
+                style={{ marginLeft: "10px", backgroundColor: "hotpink" }}
+              />
+              <div className="another-bubble">{data.message}</div>
+            </div>
+          </div>
+        );
+      }
       chatlog.push(ref);
       setChatlog(chatlog);
     }
