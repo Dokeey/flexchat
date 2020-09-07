@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3a0ec987a0a274dd70d3d0c05851c6c2",
+    "revision": "d3eb58be20516648b42121d15a10c96d",
     "url": "/flexchat/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/flexchat/static/css/2.d4e7eff5.chunk.css"
   },
   {
-    "revision": "76851d035de8f367bb36",
+    "revision": "8eecd00e0fb74856147d",
     "url": "/flexchat/static/css/main.6ac6e18a.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/flexchat/static/js/2.323961ef.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "76851d035de8f367bb36",
-    "url": "/flexchat/static/js/main.d4181208.chunk.js"
+    "revision": "8eecd00e0fb74856147d",
+    "url": "/flexchat/static/js/main.5716e86d.chunk.js"
   },
   {
     "revision": "e41322968f39ce0e0d93",
