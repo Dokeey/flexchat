@@ -1,8 +1,8 @@
 import React from "react";
-import Axios from "axios";
 import { useInterval } from "utils/useInterval";
 import { useAppContext, setTotalUser } from "store";
 import { Card } from "antd";
+import { axiosInstance } from "api";
 
 export function UserCount() {
   const {
@@ -12,7 +12,7 @@ export function UserCount() {
 
   const get_user_count = async () => {
     try {
-      const response = await Axios.get("http://localhost/chat/users_count/");
+      const response = await axiosInstance.get("/chat/users_count/");
       dispatch(setTotalUser(response.data.count));
     } catch (error) {
       console.error(error);

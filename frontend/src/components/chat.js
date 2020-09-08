@@ -16,6 +16,7 @@ import { useInterval } from "utils/useInterval";
 import { setTotalUser } from "store";
 import Axios from "axios";
 import { setIsMatch } from "store";
+import { axiosInstance } from "api";
 
 export function Chat({ chatSocket, setChatSocket }) {
   const {
@@ -33,11 +34,10 @@ export function Chat({ chatSocket, setChatSocket }) {
   const headers = { Authorization: `JWT ${jwtToken}` };
 
   const get_waiters_counter = () => {
-    console.log(is_match, group);
-    if (jwtToken) {
+    if (jwtToken && is_match && !group) {
       try {
-        const response = Axios.get("http://localhost/chat/users_count/");
-        const response2 = Axios.get(`http://localhost/chat/group/${pk}/`, {
+        const response = axiosInstance.get("/chat/users_count/");
+        const response2 = axiosInstance.get(`/chat/group/${pk}/`, {
           headers,
         });
         Axios.all([response, response2])

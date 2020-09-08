@@ -3,7 +3,7 @@ import { Route } from "react-router-dom";
 import Home from "./home";
 import { Beforeunload } from "react-beforeunload";
 import { useAppContext, deleteToken, deleteGroup } from "store";
-import Axios from "axios";
+import { API_HOST } from "Constants";
 
 function Root() {
   const {
@@ -11,17 +11,19 @@ function Root() {
     dispatch,
   } = useAppContext();
 
-  const userDelete = async (pk) => {
+  const userDelete = async () => {
     dispatch(deleteToken());
     dispatch(deleteGroup());
+    const HOST = API_HOST;
+    // const HOST = "http://localhost";
     try {
-      await Axios.delete(`http://localhost/accounts/users/${pk}/`);
+      navigator.sendBeacon(`${HOST}/accounts/delete/${pk}/`);
     } catch (error) {
       console.error(error);
     }
   };
   return (
-    <Beforeunload onBeforeunload={() => userDelete(pk)}>
+    <Beforeunload onBeforeunload={() => userDelete()}>
       <Route path="/" component={Home} />
     </Beforeunload>
   );

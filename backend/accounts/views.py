@@ -2,7 +2,8 @@ from django.contrib.auth import get_user_model
 from django.utils.crypto import get_random_string
 from rest_framework import viewsets, status
 from rest_framework import permissions
-from rest_framework.mixins import CreateModelMixin, UpdateModelMixin, DestroyModelMixin
+from rest_framework.generics import DestroyAPIView
+from rest_framework.mixins import CreateModelMixin, UpdateModelMixin
 from rest_framework.response import Response
 from rest_framework_jwt.settings import api_settings
 
@@ -12,7 +13,7 @@ from chat.models import Channel
 User = get_user_model()
 
 
-class UserViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, viewsets.GenericViewSet):
+class UserViewSet(CreateModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
     """
     기본 유저 생성 및 업데이트 뷰셋
     """
@@ -57,11 +58,17 @@ class UserViewSet(CreateModelMixin, UpdateModelMixin, DestroyModelMixin, viewset
 
         return super().perform_create(serializer)
 
-    def destroy(self, request, *args, **kwargs):
+
+class UserDeleteView(DestroyAPIView):
+    queryset = User.objects.all()
+    permission_classes = [permissions.AllowAny]
+
+    def post(self, request, *args, **kwargs):
         """
         pk가 -1이라면 아직 회원이 아니라는 뜻
         """
         pk = self.kwargs.get('pk')
+
         if pk == '-1':
-            return Response(status.HTTP_204_NO_CONTENT)
-        return super().destroy(self, request, *args, **kwargs)
+            return Response(status.HTTP_204_NO_CONTENT) # FIXME: 현재는 404 error를 반환하는데 정상 응답처리(204)로 고쳐야함.
+        return self.destroy(request, *args, **kwargs)

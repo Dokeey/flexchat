@@ -122,6 +122,10 @@ class ChatMatchView(GenericAPIView):
         return user, user.gender, user.want_match
 
     def get_group_hook(self, gender, want_match, request, **kwargs):
+        """
+        상대방이 없을경우의 web hook 형태 기능
+        상대방이 없다면 나의 그룹명이 생길때까지 1초간격으로 확인.
+        """
         while not self.get_object().group:
             user = self.get_object().user
             if not User.objects.filter(pk=user.pk).exists():
@@ -137,7 +141,7 @@ class ChatMatchView(GenericAPIView):
 
     def get(self, request, *args, **kwargs):
         """
-        매칭시작버튼 누를시 동작
+        유저들간의 매칭이 이루어 지는 메소드
         """
         # 유저 정보 가져오기
         user, gender, want_match = self.get_user_info()
@@ -174,9 +178,12 @@ class GetGroupNameAndWaitersCountView(RetrieveAPIView):
     본인의 Group 명과 본인 앞 대기자수를 받아오는 뷰
     """
     queryset = User.objects.all()
-    serializer_class = ChatMatchSerializer
+    serializer_class = ChatMatchSerializer # FIXME: 현재는 그룹명을 hook으로 가져오기때문에 group name은 반환안해도 될 수있음.
 
     def get_object(self):
+        """
+        pk는 유저의 pk를 가져오지만 instance는 channel로 지정
+        """
         obj = super().get_object()
         return obj.channel
 
@@ -186,6 +193,9 @@ class GetGroupNameAndWaitersCountView(RetrieveAPIView):
         return user, user.gender, user.want_match
 
     def get(self, request, *args, **kwargs):
+        """
+        본인의 큐를 찾고 내 앞의 대기자수를 반환
+        """
         user, gender, want_match = self.get_user_info()
         my_queue = get_queue(gender, want_match)
         try:
@@ -195,6 +205,9 @@ class GetGroupNameAndWaitersCountView(RetrieveAPIView):
         return self.waiters_count_response(request, count=count, **kwargs)
 
     def waiters_count_response(self, request, count=0, **kwargs):
+        """
+        대기자수를 업데이트하고 Response
+        """
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
@@ -205,7 +218,7 @@ class GetGroupNameAndWaitersCountView(RetrieveAPIView):
 
 class GetAllUsersCountView(GenericAPIView):
     """
-    현재 접속자들의 수를 보여주는 뷰
+    현재 전체 접속자들의 수를 보여주는 뷰
     """
     queryset = User.objects.all().filter(is_staff=False)
     permission_classes = [AllowAny]

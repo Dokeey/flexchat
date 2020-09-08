@@ -1,10 +1,10 @@
 import React from "react";
 import { Button, notification } from "antd";
-import Axios from "axios";
 import { setGroup, useAppContext } from "store";
 import { setIsLogin } from "store";
 import { CommentOutlined, SmileOutlined } from "@ant-design/icons";
 import { setIsMatch } from "store";
+import { axiosInstance } from "api";
 
 export function ChatStart({ chatClose, setWaiters }) {
   const {
@@ -22,7 +22,7 @@ export function ChatStart({ chatClose, setWaiters }) {
     dispatch(setIsMatch(true));
     try {
       console.log(is_match);
-      const response = await Axios.get(`http://localhost/chat/match/${pk}/`, {
+      const response = await axiosInstance.get(`/chat/match/${pk}/`, {
         headers,
       });
       dispatch(setGroup(response.data.group));

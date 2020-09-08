@@ -15,7 +15,7 @@ RUN    pip install --no-cache-dir -r requirements.txt
 EXPOSE 80
 
 
-CMD    gunicorn backend.wsgi --bind 0.0.0.0:$PORT
+CMD    daphne -b 0.0.0.0 -p $PORT backend.asgi:application
 #CMD ["uwsgi", "--plugins", "http,python", \
 #              "--http", "0.0.0.0:80", \
 #              "--wsgi-file", "/bns/buynsell/wsgi.py", \

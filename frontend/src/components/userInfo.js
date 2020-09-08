@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Radio, Drawer, Button, notification } from "antd";
 import { useAppContext } from "store";
-import Axios from "axios";
 import { setToken } from "store";
 import {
   SettingFilled,
@@ -13,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import { setIsMatch } from "store";
 import { setIsLogin } from "store";
+import { axiosInstance } from "api";
 
 export function UserInfo({ signal }) {
   const {
@@ -29,8 +29,8 @@ export function UserInfo({ signal }) {
       if (userInfo.pk) {
         dispatch(setIsMatch(false));
         const headers = { Authorization: `JWT ${jwtToken}` };
-        const response = await Axios.put(
-          `http://localhost/accounts/users/${userInfo.pk}/`,
+        const response = await axiosInstance.put(
+          `/accounts/users/${userInfo.pk}/`,
           { ...userInfo },
           { headers }
         );
@@ -38,7 +38,7 @@ export function UserInfo({ signal }) {
         setLoading(false);
         onDrawerClose();
       } else {
-        const response = await Axios.post("http://localhost/accounts/users/", {
+        const response = await axiosInstance.post("/accounts/users/", {
           ...userInfo,
         });
         setUserInfo(response.data);

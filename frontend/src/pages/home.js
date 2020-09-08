@@ -14,7 +14,9 @@ function Home() {
   const [chatSocket, setChatSocket] = useState({});
   useEffect(() => {
     if (jwtToken && group) {
-      const ws = new WebSocket(`ws://localhost/ws/chat/?token=${jwtToken}`);
+      const ws = new WebSocket(
+        `wss://dry-dawn-35150.herokuapp.com/ws/chat/?token=${jwtToken}`
+      );
       setChatSocket(ws);
     }
   }, [jwtToken, group]);

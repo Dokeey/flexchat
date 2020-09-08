@@ -7,7 +7,7 @@ import "antd/dist/antd.css";
 import "main.css";
 
 ReactDOM.render(
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <AppProvider>
       <Root />
     </AppProvider>
