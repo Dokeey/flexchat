@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/flexchat/static/css/main.6ac6e18a.chunk.css",
-    "main.js": "/flexchat/static/js/main.5716e86d.chunk.js",
-    "main.js.map": "/flexchat/static/js/main.5716e86d.chunk.js.map",
-    "runtime-main.js": "/flexchat/static/js/runtime-main.6b471d68.js",
-    "runtime-main.js.map": "/flexchat/static/js/runtime-main.6b471d68.js.map",
-    "static/css/2.d4e7eff5.chunk.css": "/flexchat/static/css/2.d4e7eff5.chunk.css",
-    "static/js/2.323961ef.chunk.js": "/flexchat/static/js/2.323961ef.chunk.js",
-    "static/js/2.323961ef.chunk.js.map": "/flexchat/static/js/2.323961ef.chunk.js.map",
-    "index.html": "/flexchat/index.html",
-    "precache-manifest.1d2e01ec9b6c7673555ef1754773e9de.js": "/flexchat/precache-manifest.1d2e01ec9b6c7673555ef1754773e9de.js",
-    "service-worker.js": "/flexchat/service-worker.js",
-    "static/css/2.d4e7eff5.chunk.css.map": "/flexchat/static/css/2.d4e7eff5.chunk.css.map",
-    "static/css/main.6ac6e18a.chunk.css.map": "/flexchat/static/css/main.6ac6e18a.chunk.css.map",
-    "static/js/2.323961ef.chunk.js.LICENSE.txt": "/flexchat/static/js/2.323961ef.chunk.js.LICENSE.txt",
-    "static/media/chat.scss": "/flexchat/static/media/chatback.e82d095f.png",
-    "static/media/flexchatlogo.png": "/flexchat/static/media/flexchatlogo.ad21ba20.png"
+    "main.css": "/static/css/main.79b65b25.chunk.css",
+    "main.js": "/static/js/main.57ecb318.chunk.js",
+    "main.js.map": "/static/js/main.57ecb318.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.c8a21426.js",
+    "runtime-main.js.map": "/static/js/runtime-main.c8a21426.js.map",
+    "static/css/2.d4e7eff5.chunk.css": "/static/css/2.d4e7eff5.chunk.css",
+    "static/js/2.8b76329c.chunk.js": "/static/js/2.8b76329c.chunk.js",
+    "static/js/2.8b76329c.chunk.js.map": "/static/js/2.8b76329c.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.1e5965d7ffa3aacba04e2980a5e053ed.js": "/precache-manifest.1e5965d7ffa3aacba04e2980a5e053ed.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.d4e7eff5.chunk.css.map": "/static/css/2.d4e7eff5.chunk.css.map",
+    "static/css/main.79b65b25.chunk.css.map": "/static/css/main.79b65b25.chunk.css.map",
+    "static/js/2.8b76329c.chunk.js.LICENSE.txt": "/static/js/2.8b76329c.chunk.js.LICENSE.txt",
+    "static/media/chat.scss": "/static/media/chatback.e82d095f.png",
+    "static/media/flexchatlogo.png": "/static/media/flexchatlogo.ad21ba20.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.6b471d68.js",
+    "static/js/runtime-main.c8a21426.js",
     "static/css/2.d4e7eff5.chunk.css",
-    "static/js/2.323961ef.chunk.js",
-    "static/css/main.6ac6e18a.chunk.css",
-    "static/js/main.5716e86d.chunk.js"
+    "static/js/2.8b76329c.chunk.js",
+    "static/css/main.79b65b25.chunk.css",
+    "static/js/main.57ecb318.chunk.js"
   ]
 }
