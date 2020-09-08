@@ -23,7 +23,17 @@ export function UserCount() {
 
   return (
     <Card
-      title={<div style={{ textAlign: "center" }}>지금 몇명?</div>}
+      hoverable={true}
+      title={
+        <div
+          style={{
+            textAlign: "center",
+            wordBreak: "break-all",
+          }}
+        >
+          지금 몇명?
+        </div>
+      }
       bordered={true}
     >
       <h1 style={{ textAlign: "center", color: "#43d5d2" }}>{total_user}</h1>

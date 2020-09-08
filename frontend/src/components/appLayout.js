@@ -7,7 +7,7 @@ export function AppLayout({ children, right_sidebar, user_info }) {
     <div className="app">
       <div className="header">
         <div className="logo">
-          <img src={Logo} alt="Flex 주사위 Chat" />
+          <img src={Logo} alt="Flex Chat" />
         </div>
         <div className="topnav">{user_info}</div>
       </div>

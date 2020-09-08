@@ -79,12 +79,18 @@ export function UserInfo({ signal }) {
         {jwtToken ? (
           <SettingFilled
             onClick={showDrawer}
-            style={{ fontSize: "40px", color: "#43d5d2" }}
+            style={{
+              fontSize: "40px",
+              color: "#43d5d2",
+            }}
           />
         ) : (
           <SettingOutlined
             onClick={showDrawer}
-            style={{ fontSize: "40px", color: "#43d5d2" }}
+            style={{
+              fontSize: "40px",
+              color: "#43d5d2",
+            }}
           />
         )}
         <Drawer
