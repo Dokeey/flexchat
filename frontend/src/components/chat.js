@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useAppContext, deleteGroup } from "store";
+import { useAppContext, deleteGroup, setIsMatch, setTotalUser } from "store";
 import { ChatStart } from "./chatStart";
 import Search from "antd/lib/input/Search";
 import {
@@ -11,12 +11,10 @@ import {
   CloseCircleOutlined,
 } from "@ant-design/icons";
 import { Avatar, Spin, notification } from "antd";
-import "./chat.scss";
 import { useInterval } from "utils/useInterval";
-import { setTotalUser } from "store";
 import Axios from "axios";
-import { setIsMatch } from "store";
 import { axiosInstance } from "api";
+import "./chat.scss";
 
 export function Chat({ chatSocket, setChatSocket }) {
   const {
@@ -24,12 +22,10 @@ export function Chat({ chatSocket, setChatSocket }) {
     dispatch,
   } = useAppContext();
   const [message, setMessage] = useState("");
-  const [key, setKey] = useState(1);
+  const [key, setKey] = useState(0);
   const [waiters, setWaiters] = useState(0);
   const messagesEndRef = useRef(null);
-  const [chatlog, setChatlog] = useState([
-    <div key="0" ref={messagesEndRef}></div>,
-  ]);
+  const [chatlog, setChatlog] = useState([]);
 
   const headers = { Authorization: `JWT ${jwtToken}` };
 
@@ -64,16 +60,16 @@ export function Chat({ chatSocket, setChatSocket }) {
   chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
     if (pk === data.pk) {
-      const ref = chatlog.pop();
+      // const ref = chatlog.pop();
       chatlog.push(
         <div key={key} className="bubble">
           {data.message}
         </div>
       );
-      chatlog.push(ref);
+      // chatlog.push(ref);
       setChatlog(chatlog);
     } else {
-      const ref = chatlog.pop();
+      // const ref = chatlog.pop();
       if (data.gender === "M") {
         chatlog.push(
           <div key={key} className="another">
@@ -99,7 +95,7 @@ export function Chat({ chatSocket, setChatSocket }) {
           </div>
         );
       }
-      chatlog.push(ref);
+      // chatlog.push(ref);
       setChatlog(chatlog);
     }
     setKey((prevValue) => prevValue + 1);
@@ -138,14 +134,6 @@ export function Chat({ chatSocket, setChatSocket }) {
     setMessage("");
   };
 
-  const scrollToBottom = () => {
-    messagesEndRef.current.scrollIntoView({
-      behavior: "smooth",
-    });
-  };
-
-  useEffect(scrollToBottom, [chatlog]);
-
   // const [maxHeight, setMaxHeight] = useState("100vh");
 
   // useEffect(() => {
@@ -165,13 +153,19 @@ export function Chat({ chatSocket, setChatSocket }) {
   //   return height;
   // };
   // const height = useHeight();
+
+  useEffect(() => {
+    document.querySelector(
+      ".chat-log-window"
+    ).scrollTop = document.querySelector(".chat-log-window").scrollHeight;
+  }, [key]);
+
   return (
     <div className="chat-content">
-      <div className="chat-log-window">
+      <div className="chat-log-window" id="test">
         {!is_match ? (
           <div className="flex-center">
             <ChatStart chatClose={chatclose} setWaiters={setWaiters} />
-            {chatlog}
           </div>
         ) : !group ? (
           <div className="flex-center">
