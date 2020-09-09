@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.fd90dfe5.chunk.css",
+    "main.css": "/static/css/main.2e2bea04.chunk.css",
     "main.js": "/static/js/main.b109dea5.chunk.js",
     "main.js.map": "/static/js/main.b109dea5.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.c8a21426.js",
@@ -9,10 +9,10 @@
     "static/js/2.b9b36ba5.chunk.js": "/static/js/2.b9b36ba5.chunk.js",
     "static/js/2.b9b36ba5.chunk.js.map": "/static/js/2.b9b36ba5.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.685540a2d904a6db3369ea766660a4aa.js": "/precache-manifest.685540a2d904a6db3369ea766660a4aa.js",
+    "precache-manifest.87ee2798f735e8eee260e5744f4878e6.js": "/precache-manifest.87ee2798f735e8eee260e5744f4878e6.js",
     "service-worker.js": "/service-worker.js",
     "static/css/2.d4e7eff5.chunk.css.map": "/static/css/2.d4e7eff5.chunk.css.map",
-    "static/css/main.fd90dfe5.chunk.css.map": "/static/css/main.fd90dfe5.chunk.css.map",
+    "static/css/main.2e2bea04.chunk.css.map": "/static/css/main.2e2bea04.chunk.css.map",
     "static/js/2.b9b36ba5.chunk.js.LICENSE.txt": "/static/js/2.b9b36ba5.chunk.js.LICENSE.txt",
     "static/media/chat.scss": "/static/media/chatback.e82d095f.png",
     "static/media/flexchatlogo.png": "/static/media/flexchatlogo.ad21ba20.png"
@@ -21,7 +21,7 @@
     "static/js/runtime-main.c8a21426.js",
     "static/css/2.d4e7eff5.chunk.css",
     "static/js/2.b9b36ba5.chunk.js",
-    "static/css/main.fd90dfe5.chunk.css",
+    "static/css/main.2e2bea04.chunk.css",
     "static/js/main.b109dea5.chunk.js"
   ]
 }
