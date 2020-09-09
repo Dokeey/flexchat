@@ -24,7 +24,8 @@
     grid-template-columns: 1fr 3fr 1fr;
     grid-template-areas: "topnav logo .";
     border-bottom: 1px solid #eaeaea;
-    height: 100%;
+    // height: 100%;
+    height: 15vh;
 
     .logo {
       display: flex;
@@ -66,12 +67,15 @@
     // max-height: 70vh;
     grid-area: contents;
     min-width: 200px;
+    height: 75vh;
     // background-color: blue;
   }
 
   .footer {
     grid-area: footer;
-    justify-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     border-top: 1px solid #eaeaea;
     // background-color: yellow;

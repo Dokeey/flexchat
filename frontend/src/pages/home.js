@@ -5,6 +5,7 @@ import { AppLayout } from "components/appLayout";
 import { useAppContext } from "store";
 import { ChatStop } from "components/chatStop";
 import { UserInfo } from "components/userInfo";
+import { Footer } from "components/footer";
 
 function Home() {
   const {
@@ -30,7 +31,11 @@ function Home() {
 
   return (
     <div>
-      <AppLayout right_sidebar={right_sidebar} user_info={<UserInfo />}>
+      <AppLayout
+        right_sidebar={right_sidebar}
+        user_info={<UserInfo />}
+        footer={<Footer />}
+      >
         <Chat chatSocket={chatSocket} setChatSocket={setChatSocket} />
       </AppLayout>
     </div>

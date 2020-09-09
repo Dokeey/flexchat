@@ -2,7 +2,7 @@ import React from "react";
 import "./appLayout.scss";
 import Logo from "assets/flexchatlogo.png";
 
-export function AppLayout({ children, right_sidebar, user_info }) {
+export function AppLayout({ children, right_sidebar, user_info, footer }) {
   return (
     <div className="app">
       <div className="header">
@@ -14,7 +14,7 @@ export function AppLayout({ children, right_sidebar, user_info }) {
       <div className="contents">{children}</div>
       <div className="left-sidebar"></div>
       <div className="right-sidebar">{right_sidebar}</div>
-      <div className="footer">&copy; 2020. flexchat</div>
+      <div className="footer">{footer}</div>
     </div>
   );
 }

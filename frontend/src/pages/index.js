@@ -1,9 +1,9 @@
 import React from "react";
 import { Route } from "react-router-dom";
 import Home from "./home";
-import { Beforeunload } from "react-beforeunload";
 import { useAppContext, deleteToken, deleteGroup } from "store";
 import { API_HOST } from "Constants";
+import { Unload } from "utils/Unload";
 
 function Root() {
   const {
@@ -11,21 +11,35 @@ function Root() {
     dispatch,
   } = useAppContext();
 
-  const userDelete = async () => {
+  const userDelete = () => {
     dispatch(deleteToken());
     dispatch(deleteGroup());
-    const HOST = API_HOST;
     // const HOST = "http://localhost";
+    const HOST = API_HOST;
     try {
       navigator.sendBeacon(`${HOST}/accounts/delete/${pk}/`);
     } catch (error) {
       console.error(error);
     }
   };
+
+  // useEffect(() => {
+  //   const userDel = () => userDelete();
+  //   window.addEventListener("unload", userDel);
+  //   window.addEventListener("beforeunload", userDel);
+  //   window.addEventListener("pagehide", userDel);
+  //   return () => {
+  //     window.removeEventListener("unload", userDel);
+  //     window.removeEventListener("beforeunload", userDel);
+  //     window.removeEventListener("pagehide", userDel);
+  //   };
+  // });
+
   return (
-    <Beforeunload onBeforeunload={() => userDelete()}>
+    <Unload onUnload={() => userDelete()}>
+      {/* <Beforeunload onBeforeunload={() => userDelete()}> */}
       <Route path="/" component={Home} />
-    </Beforeunload>
+    </Unload>
   );
 }
 
