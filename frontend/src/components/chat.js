@@ -144,7 +144,7 @@ export function Chat({ chatSocket, setChatSocket }) {
     });
   };
 
-  useEffect(scrollToBottom, [key]);
+  useEffect(scrollToBottom, [chatlog]);
 
   // const [maxHeight, setMaxHeight] = useState("100vh");
 
