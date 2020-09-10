@@ -6,6 +6,7 @@ import { useAppContext } from "store";
 import { ChatStop } from "components/chatStop";
 import { UserInfo } from "components/userInfo";
 import { Footer } from "components/footer";
+import { SOCKET_HOST } from "Constants";
 
 function Home() {
   const {
@@ -13,11 +14,10 @@ function Home() {
   } = useAppContext();
 
   const [chatSocket, setChatSocket] = useState({});
+
   useEffect(() => {
     if (jwtToken && group) {
-      const ws = new WebSocket(
-        `wss://dry-dawn-35150.herokuapp.com/ws/chat/?token=${jwtToken}`
-      );
+      const ws = new WebSocket(SOCKET_HOST + `/ws/chat/?token=${jwtToken}`);
       setChatSocket(ws);
     }
   }, [jwtToken, group]);

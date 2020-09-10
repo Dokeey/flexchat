@@ -7,7 +7,7 @@ import { Unload } from "utils/Unload";
 
 function Root() {
   const {
-    store: { pk },
+    store: { pk, userSocket },
     dispatch,
   } = useAppContext();
 
@@ -16,6 +16,7 @@ function Root() {
     dispatch(deleteGroup());
     // const HOST = "http://localhost";
     const HOST = API_HOST;
+    userSocket.send(JSON.stringify({}));
     try {
       navigator.sendBeacon(`${HOST}/accounts/delete/${pk}/`);
     } catch (error) {

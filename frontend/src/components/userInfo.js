@@ -16,7 +16,7 @@ import { axiosInstance } from "api";
 
 export function UserInfo({ signal }) {
   const {
-    store: { jwtToken, is_login },
+    store: { jwtToken, is_login, userSocket },
     dispatch,
   } = useAppContext();
   const [userInfo, setUserInfo] = useState({ gender: "", want_match: "" });
@@ -46,6 +46,7 @@ export function UserInfo({ signal }) {
         setLoading(false);
         onDrawerClose();
         dispatch(setIsLogin(true));
+        userSocket.send(JSON.stringify({}));
       }
 
       notification.open({

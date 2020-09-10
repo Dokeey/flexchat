@@ -215,14 +215,3 @@ class GetGroupNameAndWaitersCountView(RetrieveAPIView):
         serializer.save(waiters_count=count)
         return Response(serializer.data)
 
-
-class GetAllUsersCountView(GenericAPIView):
-    """
-    현재 전체 접속자들의 수를 보여주는 뷰
-    """
-    queryset = User.objects.all().filter(is_staff=False)
-    permission_classes = [AllowAny]
-
-    def get(self, request, *args, **kwargs):
-        count = self.get_queryset().count()
-        return Response({'count': count})

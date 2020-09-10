@@ -90,3 +90,50 @@ class ChatConsumer(AsyncWebsocketConsumer):
             'pk': pk,
             'gender': gender,
         }))
+
+class AllUserConsumer(AsyncWebsocketConsumer):
+
+    @database_sync_to_async
+    def get_user_count(self):
+        return User.objects.all().filter(is_staff=False).count()
+
+    async def connect(self):
+        self.room_group_name = "users"
+
+        # Join room group
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        await self.accept()
+
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'user_message',
+                'user_count': await self.get_user_count(),
+            }
+        )
+
+
+    async def receive(self, text_data):
+        # text_data_json = json.loads(text_data)
+        # message = text_data_json['message']
+
+        # Send message to room group
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'user_message',
+                'user_count': await self.get_user_count(),
+            }
+        )
+
+    async def user_message(self, event):
+        user_count = event['user_count']
+
+        # Send message to WebSocket
+        await self.send(text_data=json.dumps({
+            'user_count': user_count,
+        }))

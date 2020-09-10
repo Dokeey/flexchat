@@ -33,7 +33,7 @@ export const Footer = () => {
           </Timeline.Item>
           <Timeline.Item
             dot={<InfoCircleOutlined className="timeline-clock-icon" />}
-            color="red"
+            color="dimgray"
           >
             친구 못 사귀어도 책임 안짐
           </Timeline.Item>
@@ -69,7 +69,7 @@ export const Footer = () => {
           </Timeline.Item>
           <Timeline.Item
             dot={<InfoCircleOutlined className="timeline-clock-icon" />}
-            color="red"
+            color="dimgray"
           >
             삼겹살을 좋아함
           </Timeline.Item>
@@ -106,7 +106,7 @@ export const Footer = () => {
           </Timeline.Item>
           <Timeline.Item
             dot={<InfoCircleOutlined className="timeline-clock-icon" />}
-            color="red"
+            color="dimgray"
           >
             강아지를 키움
           </Timeline.Item>
