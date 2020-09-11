@@ -58,6 +58,12 @@ class UserViewSet(CreateModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
 
         return super().perform_create(serializer)
 
+    def perform_update(self, serializer):
+        user = self.get_object()
+        user.channel.is_matching = False
+        user.channel.save()
+        return super().perform_update(serializer)
+
 
 class UserDeleteView(DestroyAPIView):
     queryset = User.objects.all()

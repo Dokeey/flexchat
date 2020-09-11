@@ -13,6 +13,8 @@ import {
 import { setIsMatch } from "store";
 import { setIsLogin } from "store";
 import { axiosInstance } from "api";
+import { setUserSocket } from "store";
+import { SOCKET_HOST } from "Constants";
 
 export function UserInfo({ signal }) {
   const {
@@ -47,6 +49,11 @@ export function UserInfo({ signal }) {
         onDrawerClose();
         dispatch(setIsLogin(true));
         userSocket.send(JSON.stringify({}));
+        userSocket.close(4000);
+        const ws = new WebSocket(
+          SOCKET_HOST + `/ws/users/?token=${response.data.token}`
+        );
+        dispatch(setUserSocket(ws));
       }
 
       notification.open({

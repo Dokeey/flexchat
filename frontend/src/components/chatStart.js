@@ -1,14 +1,16 @@
 import React from "react";
-import { Button, notification } from "antd";
-import { setGroup, useAppContext } from "store";
+import { Button } from "antd";
+import { useAppContext } from "store";
 import { setIsLogin } from "store";
-import { CommentOutlined, SmileOutlined } from "@ant-design/icons";
+import { CommentOutlined } from "@ant-design/icons";
 import { setIsMatch } from "store";
 import { axiosInstance } from "api";
+import { SOCKET_HOST } from "Constants";
+import { setWaiterSocket } from "store";
 
 export function ChatStart({ chatClose, setWaiters }) {
   const {
-    store: { pk, jwtToken, is_match },
+    store: { pk, jwtToken, userSocket, waiterSocket },
     dispatch,
   } = useAppContext();
   const headers = { Authorization: `JWT ${jwtToken}` };
@@ -20,19 +22,27 @@ export function ChatStart({ chatClose, setWaiters }) {
       return null;
     }
     dispatch(setIsMatch(true));
+    if (waiterSocket) {
+      waiterSocket.send(JSON.stringify({}));
+    }
     try {
-      console.log(is_match);
       const response = await axiosInstance.get(`/chat/match/${pk}/`, {
         headers,
       });
-      dispatch(setGroup(response.data.group));
-      setWaiters(0);
-
-      notification.open({
-        message: "상대방과 연결되었습니다.",
-        description: "인사를 건네보세요 :)",
-        icon: <SmileOutlined style={{ color: "#43d5d2" }} />,
-      });
+      if (response.data.group) {
+        userSocket.send(
+          JSON.stringify({
+            group: response.data.group,
+          })
+        );
+      } else {
+        const ws = new WebSocket(SOCKET_HOST + `/ws/waiter/?token=${jwtToken}`);
+        ws.onmessage = (e) => {
+          const data = JSON.parse(e.data);
+          setWaiters(data.waiters_count);
+        };
+        dispatch(setWaiterSocket(ws));
+      }
     } catch (error) {
       console.error(error);
     }

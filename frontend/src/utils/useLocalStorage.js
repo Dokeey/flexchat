@@ -8,7 +8,7 @@ export function getStorageItem(key, initialValue) {
     return item ? JSON.parse(item) : initialValue;
   } catch (error) {
     // If error also return initialValue
-    console.log(error);
+    console.error(error);
     return initialValue;
   }
 }
@@ -16,7 +16,7 @@ export function setStorageItem(key, value) {
   try {
     window.localStorage.setItem(key, JSON.stringify(value));
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 

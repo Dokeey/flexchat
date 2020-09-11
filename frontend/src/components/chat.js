@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useAppContext, deleteGroup, setIsMatch, setTotalUser } from "store";
+import { useAppContext, deleteGroup, setIsMatch } from "store";
 import { ChatStart } from "./chatStart";
 import Search from "antd/lib/input/Search";
 import {
@@ -11,14 +11,11 @@ import {
   CloseCircleOutlined,
 } from "@ant-design/icons";
 import { Avatar, Spin, notification } from "antd";
-import { useInterval } from "utils/useInterval";
-import Axios from "axios";
-import { axiosInstance } from "api";
 import "./chat.scss";
 
 export function Chat({ chatSocket, setChatSocket }) {
   const {
-    store: { group, pk, jwtToken, is_match },
+    store: { group, pk, is_match, waiterSocket },
     dispatch,
   } = useAppContext();
   const [message, setMessage] = useState("");
@@ -27,49 +24,23 @@ export function Chat({ chatSocket, setChatSocket }) {
   const messagesEndRef = useRef(null);
   const [chatlog, setChatlog] = useState([]);
 
-  const headers = { Authorization: `JWT ${jwtToken}` };
-
-  const get_waiters_counter = () => {
-    if (jwtToken && is_match && !group) {
-      try {
-        const response = axiosInstance.get("/chat/users_count/");
-        const response2 = axiosInstance.get(`/chat/group/${pk}/`, {
-          headers,
-        });
-        Axios.all([response, response2])
-          .then(
-            Axios.spread((...responses) => {
-              const response = responses[0];
-              const response2 = responses[1];
-              console.log("response : ", response.data);
-              console.log("response2 : ", response2.data);
-              dispatch(setTotalUser(response.data.count));
-              setWaiters(response2.data.waiters_count);
-            })
-          )
-          .catch((error) => {
-            console.error(error);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-  useInterval(get_waiters_counter, 5000);
+  if (waiterSocket) {
+    waiterSocket.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      setWaiters(data.waiters_count);
+    };
+  }
 
   chatSocket.onmessage = function (e) {
     const data = JSON.parse(e.data);
     if (pk === data.pk) {
-      // const ref = chatlog.pop();
       chatlog.push(
         <div key={key} className="bubble">
           {data.message}
         </div>
       );
-      // chatlog.push(ref);
       setChatlog(chatlog);
     } else {
-      // const ref = chatlog.pop();
       if (data.gender === "M") {
         chatlog.push(
           <div key={key} className="another">
@@ -95,7 +66,6 @@ export function Chat({ chatSocket, setChatSocket }) {
           </div>
         );
       }
-      // chatlog.push(ref);
       setChatlog(chatlog);
     }
     setKey((prevValue) => prevValue + 1);
@@ -162,7 +132,7 @@ export function Chat({ chatSocket, setChatSocket }) {
 
   return (
     <div className="chat-content">
-      <div className="chat-log-window" id="test">
+      <div className="chat-log-window">
         {!is_match ? (
           <div className="flex-center">
             <ChatStart chatClose={chatclose} setWaiters={setWaiters} />

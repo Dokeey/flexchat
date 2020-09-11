@@ -43,6 +43,10 @@ const reducer = (prevState, action) => {
     const { payload: userSocket } = action;
     const newState = { ...prevState, userSocket };
     return Update(newState);
+  } else if (type === SET_WAITERSOCKET) {
+    const { payload: waiterSocket } = action;
+    const newState = { ...prevState, waiterSocket };
+    return Update(newState);
   }
 
   return prevState;
@@ -58,6 +62,7 @@ export const AppProvider = ({ children }) => {
     is_match: false,
     is_loing: false,
     userSocket: "",
+    waiterSocket: "",
   });
   return (
     <AppContext.Provider value={{ store, dispatch }}>
@@ -77,6 +82,7 @@ const SET_TOTALUSER = "APP/SET_TOTALUSER";
 const SET_ISMATCH = "APP/SET_ISMATCH";
 const SET_ISLOGIN = "APP/SET_ISLOGIN";
 const SET_USERSOCKET = "APP/SET_USERSOCKET";
+const SET_WAITERSOCKET = "APP/SET_WAITERSOCKET";
 
 // Action Creators
 export const setToken = (token, pk) => ({
@@ -111,4 +117,9 @@ export const setIsLogin = (is_loing) => ({
 export const setUserSocket = (userSocket) => ({
   type: SET_USERSOCKET,
   payload: userSocket,
+});
+
+export const setWaiterSocket = (waiterSocket) => ({
+  type: SET_WAITERSOCKET,
+  payload: waiterSocket,
 });
