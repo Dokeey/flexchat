@@ -9,6 +9,7 @@ import { ChatStop } from "components/chatStop";
 import { UserInfo } from "components/userInfo";
 import { Footer } from "components/footer";
 import { SOCKET_HOST } from "Constants";
+import { Tip } from "components/tip";
 
 function Home() {
   const {
@@ -36,6 +37,7 @@ function Home() {
   const right_sidebar = (
     <>
       <UserCount />
+      <Tip />
       <ChatStop chatSocket={chatSocket} />
     </>
   );

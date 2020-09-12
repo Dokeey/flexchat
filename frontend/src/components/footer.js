@@ -6,6 +6,7 @@ import {
   MailOutlined,
   InfoCircleOutlined,
   ProjectOutlined,
+  CopyrightOutlined,
 } from "@ant-design/icons";
 import "./footer.scss";
 
@@ -19,6 +20,14 @@ export const Footer = () => {
           &nbsp;Project
         </Divider>
         <Timeline>
+          <Timeline.Item dot={<CopyrightOutlined />} color="dimgray">
+            <Link
+              href="https://github.com/dokeey/flexchat"
+              style={{ color: "dimgray" }}
+            >
+              Flex Chat.
+            </Link>
+          </Timeline.Item>
           <Timeline.Item
             dot={
               <GithubOutlined
@@ -27,7 +36,10 @@ export const Footer = () => {
               />
             }
           >
-            <Link href="https://github.com/dokeey/flexchat">
+            <Link
+              href="https://github.com/dokeey/flexchat"
+              style={{ color: "dimgray" }}
+            >
               https://github.com/dokeey/flexchat
             </Link>
           </Timeline.Item>
@@ -35,7 +47,10 @@ export const Footer = () => {
             dot={<InfoCircleOutlined className="timeline-clock-icon" />}
             color="dimgray"
           >
-            친구 못 사귀어도 책임 안짐
+            문의 :{" "}
+            <Link href="mailto:ehdngv@naver.com" style={{ color: "dimgray" }}>
+              ehdngv@naver.com
+            </Link>
           </Timeline.Item>
         </Timeline>
       </div>
@@ -53,7 +68,9 @@ export const Footer = () => {
               />
             }
           >
-            <Link href="mailto:ehdngv@naver.com">ehdngv@naver.com</Link>
+            <Link href="mailto:ehdngv@naver.com" style={{ color: "dimgray" }}>
+              ehdngv@naver.com
+            </Link>
           </Timeline.Item>
           <Timeline.Item
             dot={
@@ -63,15 +80,12 @@ export const Footer = () => {
               />
             }
           >
-            <Link href="https://github.com/Dokeey/">
+            <Link
+              href="https://github.com/Dokeey/"
+              style={{ color: "dimgray" }}
+            >
               https://github.com/Dokeey
             </Link>
-          </Timeline.Item>
-          <Timeline.Item
-            dot={<InfoCircleOutlined className="timeline-clock-icon" />}
-            color="dimgray"
-          >
-            삼겹살을 좋아함
           </Timeline.Item>
         </Timeline>
       </div>
@@ -90,7 +104,9 @@ export const Footer = () => {
               />
             }
           >
-            <Link href="mailto:thflthdi@naver.com">thflthdi@naver.com</Link>
+            <Link href="mailto:thflthdi@naver.com" style={{ color: "dimgray" }}>
+              thflthdi@naver.com
+            </Link>
           </Timeline.Item>
           <Timeline.Item
             dot={
@@ -100,15 +116,12 @@ export const Footer = () => {
               />
             }
           >
-            <Link href="https://github.com/thflthdi/">
+            <Link
+              href="https://github.com/thflthdi/"
+              style={{ color: "dimgray" }}
+            >
               https://github.com/thflthdi
             </Link>
-          </Timeline.Item>
-          <Timeline.Item
-            dot={<InfoCircleOutlined className="timeline-clock-icon" />}
-            color="dimgray"
-          >
-            강아지를 키움
           </Timeline.Item>
         </Timeline>
       </div>

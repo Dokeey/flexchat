@@ -132,7 +132,7 @@ class AllUserConsumer(AsyncWebsocketConsumer):
         )
 
     async def disconnect(self, close_code):
-        if close_code != 4000:
+        if close_code != 4000 and self.scope['user'].is_authenticated:
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
