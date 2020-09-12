@@ -3,7 +3,7 @@
 ## 소개
 > 원하는 상대를 설정하고 매칭해주는 랜덤채팅 서비스
 
-![image](https://img.shields.io/github/license/Dokeey/flexchat?color=blue&style=plastic)
+![image](https://img.shields.io/github/license/dokeey/flexchat?color=blue&style=plastic)
 [![image](https://img.shields.io/website?down_message=down&style=plastic&up_message=up&url=https%3A%2F%2Fflex-chat.kro.kr)](https://flex-chat.kro.kr/)
 
 ### 목적
