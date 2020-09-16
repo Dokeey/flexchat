@@ -34,12 +34,14 @@ class UserViewSet(CreateModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
         """
         유저 생성시 username 지정 및 client_ip 값 파싱후 추가
         """
+        # client_ip 파싱후 추가
         x_forwarded_for = self.request.META.get('HTTP_X_FORWARDED_FOR')
         if x_forwarded_for:
             ipaddress = x_forwarded_for.split(',')[-1].strip()
         else:
             ipaddress = self.request.META.get('REMOTE_ADDR')
 
+        # 랜덤 username을 생성후 password도 동일한 값으로 적용
         username = self.get_username()
         user = serializer.save(username=username, client_ip=ipaddress)
         user.set_password(username)
@@ -59,6 +61,9 @@ class UserViewSet(CreateModelMixin, UpdateModelMixin, viewsets.GenericViewSet):
         return super().perform_create(serializer)
 
     def perform_update(self, serializer):
+        """
+        매칭중 정보를 변경했을시, is_matching 정보를 False로 수정
+        """
         user = self.get_object()
         user.channel.is_matching = False
         user.channel.save()

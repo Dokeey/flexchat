@@ -17,9 +17,6 @@ def get_user(username):
 
 
 class TokenAuthMiddleware:
-    """
-    Custom middleware (insecure) that takes user IDs from the query string.
-    """
 
     def __init__(self, inner):
         self.inner = inner

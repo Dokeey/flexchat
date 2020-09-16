@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from django.utils.crypto import get_random_string
 
 User = get_user_model()
 
